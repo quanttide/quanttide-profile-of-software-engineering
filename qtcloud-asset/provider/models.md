@@ -1,8 +1,8 @@
-# qtcloud-asset 领域模型
+# qtcloud-asset Provider 领域模型
 
 ## 一句话概括
 
-qtcloud-asset 的世界里只有几样东西：**桶**、**桶里的文件**、**看文件的人**、**分享链接**。系统只做「看」，不做「改」。
+Provider 的世界里只有几样东西：**桶**、**桶里的文件**、**看文件的人**、**分享链接**。系统只做「看」，不做「改」。
 
 ## 实体关系图
 
@@ -17,8 +17,6 @@ User（人）
  │
  └─ 每次操作 → AuditLog（审计记录）
 ```
-
-契约（Contract）是另一条线：它不是运行时对象，而是放在项目里的 `.quanttide/asset/contract.yaml` 文件，描述「这个项目有哪些资产、该长什么样」，CLI 拿它来扫描和验证。
 
 ## 桶和文件：一切的核心
 
@@ -94,20 +92,6 @@ type Record struct {
 ## 审计：谁在什么时候做了什么
 
 每次敏感操作记一条 `AuditLog`：谁（UserID）、什么动作（Action）、对哪个对象（Target）、结果（成功/拒绝/失败）、IP、时间。动作枚举覆盖登录、登出、列桶、列文件、生成链接、创建/撤销分享、用户管理等十七类。日志支持多路存储（`MultiAuditLogStore`），生产输出结构化日志经 SLS 查询。
-
-## 契约：项目自述文件
-
-契约是 CLI 侧的模型，内容是 YAML 而非代码对象：
-
-```rust
-pub struct ContractSchema {
-    pub assets: HashMap<String, AssetConfig>,   // 项目有哪些资产
-    pub skills: HashMap<String, SkillConfig>,   // 有哪些可执行技能
-    pub validation: Option<ValidationConfig>,   // 验证策略
-}
-```
-
-例：`.quanttide/asset/contract.yaml` 里登记了 40 个 OSS 桶（`qtaccount-studio`、`qtcloud-private` 等）。CLI 的 `scan` 命令扫描目录产出资产清单，`validate` 命令把本地结构逐条和契约比对，不符合就报错——「实际结构必须和契约一致」靠它落地。
 
 ## 两条贯穿全系统的规则
 
