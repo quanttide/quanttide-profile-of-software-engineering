@@ -28,7 +28,6 @@ Learner 与课程域验收标准的交叉记录，记录通过状态。
 
 - `id`: 必选，主键（uuid）。
 - `learner_id`: 必选，→ Learner.id。
-- `criterion_id`: 必选，→ 课程域 Criterion.id（同源直连，本领域不设验收标准实体）。
 - `status`: 必选，`completed` / `not_completed`，二元枚举。
 - `created_at`: 可选，创建时间。
 - `updated_at`: 可选，更新时间。
@@ -39,7 +38,6 @@ Learner 与课程域验收标准的交叉记录，记录通过状态。
 {
   "id": "550e8400-e29b-41d4-a716-446655440001",
   "learner_id": "550e8400-e29b-41d4-a716-446655440000",
-  "criterion_id": "cri-vibe-lesson1-zed",
   "status": "completed",
   "created_at": "2026-01-01T00:00:00Z",
   "updated_at": "2026-01-01T00:00:00Z"
@@ -88,7 +86,6 @@ Learner 与课程域验收标准的交叉记录，记录通过状态。
 - `id`: 必选，唯一标识。
 - `title`: 必选，标题。
 - `description`: 必选，验收判定写进描述（做到什么程度算过），不引用外部概念。
-- `source`: 可选，来源标注（从哪位探路者的哪段实践提炼）。
 
 ### JSON 示例
 
@@ -96,7 +93,6 @@ Learner 与课程域验收标准的交叉记录，记录通过状态。
 {
   "id": "task-data-second-brain",
   "title": "熟悉数据工程第二大脑",
-  "description": "以新人视角通读量潮数据工程领域第二大脑（quanttide-data 主仓库、资产图式章程、发布管理章程），记录「知识诅咒」视角下的困惑，并提出改进建议。达成：至少一条建议经 Issue 讨论达成共识后进入 PR。",
-  "source": "源自学习日志提炼"
+  "description": "以新人视角通读量潮数据工程领域第二大脑（quanttide-data 主仓库、资产图式章程、发布管理章程），记录「知识诅咒」视角下的困惑，并提出改进建议。达成：至少一条建议经 Issue 讨论达成共识后进入 PR。"
 }
 ```
