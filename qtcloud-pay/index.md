@@ -26,6 +26,8 @@ Provider 是契约事实源，`cmd/server` 组装，`internal/` 按模块分包�
 | CLI | Rust，clap，reqwest | 0.1.0 | 账本核心命令行工作台：accounts/recharges/coupons/vouchers/orders/reconcile/milestone |
 | Studio | Flutter 桌面（Windows/macOS） | 1.0.0+1 | 管理人员图形化工作台：只做展示与表单，不承载账务逻辑 |
 
+对接代金券系统的发放、查询与结算抵现链路见 [voucher.md](./voucher.md)。
+
 ## 对外接口
 
 账本核心：`POST /accounts`（开户）、`POST /accounts/{id}/recharges`（充值登记）、`POST /accounts/{id}/refunds`（退款登记）、`GET /accounts/{id}` 与 `GET /customers/{customer_id}/account`（余额查询）、`GET /accounts/{id}/transactions`（流水）、`POST/GET /accounts/{id}/coupons|vouchers`（发放与列表）、`POST /orders`（结算）、`GET /orders/{id}`、`GET /reconcile/consistency`（一致性校验）、`POST /reconcile/bank`（对公打款核对）、`GET /accounts/{id}/statement`（账单）。渠道（默认关闭）：`POST /pay`、`GET /query/{order_id}`、`POST /refund`。
