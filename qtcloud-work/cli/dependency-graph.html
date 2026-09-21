@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>qtcloud-work CLI 依赖图</title>
+<style>
+  body { font-family: system-ui, -apple-system, "PingFang SC", "Noto Sans CJK SC", sans-serif;
+         background: #fff; color: #0f172a; margin: 24px auto; max-width: 1520px; padding: 0 16px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { font-size: 13px; color: #64748b; margin: 0 0 12px; }
+  svg { display: block; }
+  .band { fill: #f8fafc; stroke: #e2e8f0; }
+  .strip { fill: #cbd5e1; }
+  .bandlabel { font-size: 12px; fill: #94a3b8; letter-spacing: 2px; }
+  .node { fill: #fff; stroke: #cbd5e1; rx: 8; }
+  .agg  { stroke: #94a3b8; }
+  .ext  { stroke: #cbd5e1; stroke-dasharray: 5 4; fill: #fafafa; }
+  .name { font-size: 14px; font-weight: 600; fill: #0f172a; }
+  .meta { font-size: 11px; fill: #64748b; }
+  .edge { stroke: #94a3b8; stroke-width: 1.4; fill: none; }
+  .trunk { stroke: #b6c2d2; stroke-width: 1.2; fill: none; }
+  .cycle { stroke: #475569; stroke-width: 1.5; fill: none; }
+  .red  { stroke: #dc2626; stroke-width: 1.8; fill: none; }
+  .dash { stroke: #94a3b8; stroke-width: 1.4; fill: none; stroke-dasharray: 6 4; }
+  .bus  { stroke: #cbd5e1; stroke-width: 1.2; fill: none; stroke-dasharray: 3 4; }
+  .lbl  { font-size: 12px; fill: #64748b; }
+  .redlbl { font-size: 12px; fill: #dc2626; }
+  .lg { font-size: 13px; fill: #334155; }
+</style>
+</head>
+<body>
+<h1>qtcloud-work CLI 依赖图</h1>
+<p class="sub">源码真实引用关系 · 基准 qtcloud-work 852f48f（v0.1.0-beta.2）· 数据与分析见 modules.md</p>
+
+<svg viewBox="0 0 1480 1080" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+    <marker id="ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/>
+    </marker>
+    <marker id="adk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <!-- 层带 -->
+  <rect class="band" x="30" y="20" width="1420" height="170"/>
+  <rect class="strip" x="30" y="20" width="4" height="170"/>
+  <text class="bandlabel" x="46" y="44">入口与适配</text>
+
+  <rect class="band" x="30" y="250" width="1420" height="140"/>
+  <rect class="strip" x="30" y="250" width="4" height="140"/>
+  <text class="bandlabel" x="46" y="274">领域服务</text>
+
+  <rect class="band" x="30" y="450" width="1420" height="210"/>
+  <rect class="strip" x="30" y="450" width="4" height="210"/>
+  <text class="bandlabel" x="46" y="474">聚合</text>
+
+  <rect class="band" x="30" y="720" width="1420" height="160"/>
+  <rect class="strip" x="30" y="720" width="4" height="160"/>
+  <text class="bandlabel" x="46" y="744">跨聚合中立件</text>
+
+  <!-- 边：入口与适配 -->
+  <path class="edge" d="M170,112 L274,112" marker-end="url(#ag)"/>
+  <path class="trunk" d="M500,64 V40 H1432 V452"/>
+  <path class="trunk" d="M1432,452 H1300 V482" marker-end="url(#ag)"/>
+  <path class="trunk" d="M1432,442 H1045 V482" marker-end="url(#ag)"/>
+  <path class="trunk" d="M1432,432 H815 V482" marker-end="url(#ag)"/>
+  <path class="edge" d="M320,160 C300,260 220,380 165,482" marker-end="url(#ag)"/>
+  <path class="edge" d="M355,160 C345,260 335,380 332,482" marker-end="url(#ag)"/>
+  <path class="edge" d="M400,160 C430,260 540,380 590,482" marker-end="url(#ag)"/>
+  <path class="edge" d="M440,160 C520,200 580,240 615,284" marker-end="url(#ag)"/>
+  <path class="edge" d="M470,160 C560,200 720,240 795,284" marker-end="url(#ag)"/>
+  <path class="edge" d="M825,140 C660,250 380,380 200,482" marker-end="url(#ag)"/>
+  <path class="dash" d="M1060,112 L1124,112" marker-end="url(#ag)"/>
+
+  <!-- 边：服务 -->
+  <path class="edge" d="M625,354 L778,482" marker-end="url(#ag)"/>
+  <path class="edge" d="M790,354 C760,400 680,440 628,482" marker-end="url(#ag)"/>
+  <path class="edge" d="M825,354 L815,482" marker-end="url(#ag)"/>
+  <path class="edge" d="M860,354 C920,400 990,440 1035,482" marker-end="url(#ag)"/>
+
+  <!-- 边：聚合内部 -->
+  <path class="edge" d="M260,534 L284,534" marker-end="url(#ag)"/>
+  <path class="cycle" d="M480,531 L506,531" marker-end="url(#adk)"/>
+  <path class="cycle" d="M510,541 L484,541" marker-end="url(#adk)"/>
+  <path class="cycle" d="M175,486 Q400,416 640,482" marker-end="url(#adk)"/>
+  <path class="cycle" d="M630,494 Q400,432 185,494" marker-end="url(#adk)"/>
+  <path class="edge" d="M920,534 L944,534" marker-end="url(#ag)"/>
+
+  <!-- 越线：聚合 → 服务 -->
+  <path class="red" d="M245,490 L754,360" marker-end="url(#ard)"/>
+  <text class="redlbl" x="225" y="462">越线</text>
+
+  <!-- 汇总：中立件被引 -->
+  <path class="bus" d="M165,578 V640 H1265 V578"/>
+  <path class="bus" d="M715,640 V712" marker-end="url(#ag)"/>
+  <text class="lbl" x="727" y="696">各层公共依赖 · 节点小字 ←N = src/ 内引用它的文件数</text>
+
+  <!-- 节点：入口与适配 -->
+  <g><rect class="node" x="60" y="80" width="110" height="64" rx="8"/>
+     <text class="name" x="115" y="108" text-anchor="middle">main.rs</text>
+     <text class="meta" x="115" y="128" text-anchor="middle">入口 · 28 行</text></g>
+  <g><rect class="node" x="280" y="64" width="240" height="96" rx="8"/>
+     <text class="name" x="400" y="102" text-anchor="middle">cli 入口适配</text>
+     <text class="meta" x="400" y="122" text-anchor="middle">命令树 / 分派 / 发射</text>
+     <text class="meta" x="400" y="140" text-anchor="middle">cli.rs + cli/ · 570 行</text></g>
+  <g><rect class="node" x="600" y="84" width="110" height="56" rx="8"/>
+     <text class="name" x="655" y="108" text-anchor="middle">help</text>
+     <text class="meta" x="655" y="126" text-anchor="middle">导览 · 93</text></g>
+  <g><rect class="node" x="760" y="84" width="130" height="56" rx="8"/>
+     <text class="name" x="825" y="108" text-anchor="middle">prompts</text>
+     <text class="meta" x="825" y="126" text-anchor="middle">话术 · 114</text></g>
+  <g><rect class="node" x="940" y="84" width="120" height="56" rx="8"/>
+     <text class="name" x="1000" y="108" text-anchor="middle">health</text>
+     <text class="meta" x="1000" y="126" text-anchor="middle">探活 · 48</text></g>
+  <g><rect class="ext" x="1130" y="84" width="200" height="56" rx="8"/>
+     <text class="name" x="1230" y="108" text-anchor="middle">provider /health</text>
+     <text class="meta" x="1230" y="126" text-anchor="middle">api.quanttide.com（外部）</text></g>
+
+  <!-- 节点：领域服务 -->
+  <g><rect class="node" x="560" y="290" width="130" height="64" rx="8"/>
+     <text class="name" x="625" y="316" text-anchor="middle">search</text>
+     <text class="meta" x="625" y="336" text-anchor="middle">按名找文档 · 75</text></g>
+  <g><rect class="node" x="760" y="290" width="130" height="64" rx="8"/>
+     <text class="name" x="825" y="316" text-anchor="middle">audit</text>
+     <text class="meta" x="825" y="336" text-anchor="middle">机械判据 · 147</text></g>
+
+  <!-- 节点：聚合 -->
+  <g><rect class="node agg" x="70" y="490" width="190" height="88" rx="8"/>
+     <text class="name" x="165" y="522" text-anchor="middle">order 工单</text>
+     <text class="meta" x="165" y="542" text-anchor="middle">封面 + 工作记录</text>
+     <text class="meta" x="165" y="560" text-anchor="middle">1088 行 · 被引 5</text></g>
+  <g><rect class="node agg" x="290" y="490" width="190" height="88" rx="8"/>
+     <text class="name" x="385" y="522" text-anchor="middle">workflow 工作流</text>
+     <text class="meta" x="385" y="542" text-anchor="middle">YAML 定义与核对</text>
+     <text class="meta" x="385" y="560" text-anchor="middle">680 行 · 被引 9</text></g>
+  <g><rect class="node agg" x="510" y="490" width="190" height="88" rx="8"/>
+     <text class="name" x="605" y="522" text-anchor="middle">workspace 工作区</text>
+     <text class="meta" x="605" y="542" text-anchor="middle">装载 / 落点 / 核对</text>
+     <text class="meta" x="605" y="560" text-anchor="middle">519 行 · 被引 15</text></g>
+  <g><rect class="node agg" x="730" y="490" width="190" height="88" rx="8"/>
+     <text class="name" x="825" y="522" text-anchor="middle">catalog 目录</text>
+     <text class="meta" x="825" y="542" text-anchor="middle">名字索引</text>
+     <text class="meta" x="825" y="560" text-anchor="middle">210 行 · 被引 4</text></g>
+  <g><rect class="node agg" x="950" y="490" width="190" height="88" rx="8"/>
+     <text class="name" x="1045" y="522" text-anchor="middle">artifact 资产表</text>
+     <text class="meta" x="1045" y="542" text-anchor="middle">资产表与产物实例</text>
+     <text class="meta" x="1045" y="560" text-anchor="middle">168 行 · 被引 5</text></g>
+  <g><rect class="node agg" x="1170" y="490" width="190" height="88" rx="8"/>
+     <text class="name" x="1265" y="522" text-anchor="middle">material 材料</text>
+     <text class="meta" x="1265" y="542" text-anchor="middle">四字段与阶段</text>
+     <text class="meta" x="1265" y="560" text-anchor="middle">240 行 · 被引 1</text></g>
+
+  <!-- 节点：中立件 -->
+  <g><rect class="node" x="46" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="110" y="774" text-anchor="middle">criterion</text>
+     <text class="meta" x="110" y="794" text-anchor="middle">判据 · ← 8</text></g>
+  <g><rect class="node" x="186" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="250" y="774" text-anchor="middle">outcome</text>
+     <text class="meta" x="250" y="794" text-anchor="middle">结果 · ← 12</text></g>
+  <g><rect class="node" x="326" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="390" y="774" text-anchor="middle">error</text>
+     <text class="meta" x="390" y="794" text-anchor="middle">定义错误 · ← 2</text></g>
+  <g><rect class="node" x="466" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="530" y="774" text-anchor="middle">executor</text>
+     <text class="meta" x="530" y="794" text-anchor="middle">执行者 · ← 7</text></g>
+  <g><rect class="node" x="606" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="670" y="774" text-anchor="middle">paths</text>
+     <text class="meta" x="670" y="794" text-anchor="middle">占位 · ← 5</text></g>
+  <g><rect class="node" x="746" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="810" y="774" text-anchor="middle">fields</text>
+     <text class="meta" x="810" y="794" text-anchor="middle">字段表 · ← 4</text></g>
+  <g><rect class="node" x="886" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="950" y="774" text-anchor="middle">ids</text>
+     <text class="meta" x="950" y="794" text-anchor="middle">凭证 · ← 6</text></g>
+  <g><rect class="node" x="1026" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="1090" y="774" text-anchor="middle">clock</text>
+     <text class="meta" x="1090" y="794" text-anchor="middle">时刻 · ← 3</text></g>
+  <g><rect class="node" x="1166" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="1230" y="774" text-anchor="middle">sha1</text>
+     <text class="meta" x="1230" y="794" text-anchor="middle">摘要 · ← 1</text></g>
+  <g><rect class="node" x="1306" y="748" width="128" height="60" rx="8"/>
+     <text class="name" x="1370" y="774" text-anchor="middle">events</text>
+     <text class="meta" x="1370" y="794" text-anchor="middle">领域事件 · ← 3</text></g>
+
+  <!-- 图例 -->
+  <rect class="band" x="30" y="910" width="1420" height="150"/>
+  <rect class="strip" x="30" y="910" width="4" height="150"/>
+  <text class="bandlabel" x="46" y="934">图例</text>
+  <path class="edge" d="M60,962 L130,962" marker-end="url(#ag)"/>
+  <text class="lg" x="150" y="966">实线：源码真实依赖（逐一 grep use crate:: 核实）</text>
+  <path class="bus" d="M60,990 L130,990"/>
+  <text class="lg" x="150" y="994">点线：汇总引用（多对多，未逐条画）</text>
+  <path class="red" d="M60,1018 L130,1018" marker-end="url(#ard)"/>
+  <text class="lg" x="150" y="1022">红线：规矩越线 —— order → audit（order/execute.rs 47、136 行）</text>
+  <path class="cycle" d="M760,962 L830,962" marker-end="url(#adk)"/>
+  <path class="cycle" d="M830,974 L760,974" marker-end="url(#adk)"/>
+  <text class="lg" x="850" y="972">双向：互引成环（workspace ↔ order、workspace ↔ workflow）</text>
+  <path class="dash" d="M760,1018 L830,1018" marker-end="url(#ag)"/>
+  <text class="lg" x="850" y="1022">虚线：进程外边界（HTTP）· 节点小字 = 行数 · 被引文件数</text>
+</svg>
+</body>
+</html>
