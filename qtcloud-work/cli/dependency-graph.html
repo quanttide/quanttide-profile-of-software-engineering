@@ -60,10 +60,9 @@
 
   <rect class="band" x="30" y="720" width="1420" height="160"/>
   <rect class="strip" x="30" y="720" width="4" height="160"/>
-  <text class="bandlabel" x="46" y="744">跨聚合中立件</text>
+  <text class="bandlabel" x="46" y="744">基础设施（跨组件共用）</text>
 
   <!-- 边：入口与适配 -->
-  <path class="edge" d="M170,112 L274,112" marker-end="url(#ag)"/>
   <path class="trunk" d="M500,64 V40 H1432 V452"/>
   <path class="trunk" d="M1432,452 H1300 V482" marker-end="url(#ag)"/>
   <path class="trunk" d="M1432,442 H1045 V482" marker-end="url(#ag)"/>
@@ -73,8 +72,7 @@
   <path class="edge" d="M400,160 C430,260 540,380 590,482" marker-end="url(#ag)"/>
   <path class="edge" d="M440,160 C520,200 580,240 615,284" marker-end="url(#ag)"/>
   <path class="edge" d="M470,160 C560,200 720,240 795,284" marker-end="url(#ag)"/>
-  <path class="edge" d="M825,140 C660,250 380,380 200,482" marker-end="url(#ag)"/>
-  <path class="dash" d="M1060,112 L1124,112" marker-end="url(#ag)"/>
+  <path class="edge" d="M645,140 C500,250 300,380 200,482" marker-end="url(#ag)"/>
 
   <!-- 边：服务 -->
   <path class="edge" d="M625,354 L778,482" marker-end="url(#ag)"/>
@@ -97,28 +95,16 @@
   <!-- 汇总：中立件被引 -->
   <path class="bus" d="M165,578 V640 H1265 V578"/>
   <path class="bus" d="M715,640 V712" marker-end="url(#ag)"/>
-  <text class="lbl" x="727" y="696">各层公共依赖 · 节点小字 ←N = src/ 内引用它的文件数</text>
+  <text class="lbl" x="727" y="696">跨组件公共依赖 · 节点小字 ←N = src/ 内引用它的文件数</text>
 
   <!-- 节点：入口与适配 -->
-  <g><rect class="node" x="60" y="80" width="110" height="64" rx="8"/>
-     <text class="name" x="115" y="108" text-anchor="middle">main.rs</text>
-     <text class="meta" x="115" y="128" text-anchor="middle">入口 · 28 行</text></g>
   <g><rect class="node" x="280" y="64" width="240" height="96" rx="8"/>
      <text class="name" x="400" y="102" text-anchor="middle">cli 入口适配</text>
      <text class="meta" x="400" y="122" text-anchor="middle">命令树 / 分派 / 发射</text>
      <text class="meta" x="400" y="140" text-anchor="middle">cli.rs + cli/ · 570 行</text></g>
-  <g><rect class="node" x="600" y="84" width="110" height="56" rx="8"/>
-     <text class="name" x="655" y="108" text-anchor="middle">help</text>
-     <text class="meta" x="655" y="126" text-anchor="middle">导览 · 93</text></g>
-  <g><rect class="node" x="760" y="84" width="130" height="56" rx="8"/>
-     <text class="name" x="825" y="108" text-anchor="middle">prompts</text>
-     <text class="meta" x="825" y="126" text-anchor="middle">话术 · 114</text></g>
-  <g><rect class="node" x="940" y="84" width="120" height="56" rx="8"/>
-     <text class="name" x="1000" y="108" text-anchor="middle">health</text>
-     <text class="meta" x="1000" y="126" text-anchor="middle">探活 · 48</text></g>
-  <g><rect class="ext" x="1130" y="84" width="200" height="56" rx="8"/>
-     <text class="name" x="1230" y="108" text-anchor="middle">provider /health</text>
-     <text class="meta" x="1230" y="126" text-anchor="middle">api.quanttide.com（外部）</text></g>
+  <g><rect class="node" x="580" y="84" width="130" height="56" rx="8"/>
+     <text class="name" x="645" y="108" text-anchor="middle">prompts</text>
+     <text class="meta" x="645" y="126" text-anchor="middle">话术 · 114</text></g>
 
   <!-- 节点：领域服务 -->
   <g><rect class="node" x="560" y="290" width="130" height="64" rx="8"/>
@@ -199,8 +185,7 @@
   <path class="cycle" d="M760,962 L830,962" marker-end="url(#adk)"/>
   <path class="cycle" d="M830,974 L760,974" marker-end="url(#adk)"/>
   <text class="lg" x="850" y="972">双向：互引成环（workspace ↔ order、workspace ↔ workflow）</text>
-  <path class="dash" d="M760,1018 L830,1018" marker-end="url(#ag)"/>
-  <text class="lg" x="850" y="1022">虚线：进程外边界（HTTP）· 节点小字 = 行数 · 被引文件数</text>
+  <text class="lg" x="850" y="1022">节点小字 = 行数 · 被引文件数</text>
 </svg>
 </body>
 </html>
