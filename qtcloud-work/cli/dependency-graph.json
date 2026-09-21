@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "subject": "qtcloud-work CLI",
+    "source_repo": "quanttide-work apps/qtcloud-work/src/cli",
+    "baseline": {
+      "commit": "852f48f",
+      "version": "0.1.0-beta.2"
+    },
+    "method": "静态引用分析：grep use crate::，逐一核实；不含 tests/",
+    "companions": {
+      "analysis": "modules.md",
+      "diagram": "dependency-graph.html"
+    },
+    "conventions": {
+      "lines": "src/ 下该模块全部 .rs 文件行数合计",
+      "dependents": "src/ 内引用它的文件数（含入口适配，与 main-graph 小字一致）",
+      "domain_to_infra_scope": "仅聚合与领域服务，不含入口适配（cli / prompts）",
+      "kinds": {
+        "depends": "源码真实依赖",
+        "violation": "违反 CONTRIBUTING「聚合不得依赖服务」",
+        "cycle": "互引成环（两侧都有真实引用）",
+        "chain": "基础设施内部链式依赖",
+        "loop": "层间回环（events 载荷引用聚合类型）",
+        "trunk": "入口适配对多目标的汇总出线（对应图中右侧干线）"
+      }
+    }
+  },
+  "layers": [
+    { "id": "adapter", "name": "入口与适配" },
+    { "id": "service", "name": "领域服务" },
+    { "id": "aggregate", "name": "聚合" },
+    { "id": "infra", "name": "基础设施（跨组件共用）" }
+  ],
+  "nodes": [
+    { "id": "cli", "layer": "adapter", "label": "入口适配（命令树/分派/发射）", "lines": 570, "dependents": 0 },
+    { "id": "prompts", "layer": "adapter", "label": "话术", "lines": 114, "dependents": 1 },
+    { "id": "search", "layer": "service", "label": "按名找文档", "lines": 75, "dependents": 1 },
+    { "id": "audit", "layer": "service", "label": "机械判据", "lines": 147, "dependents": 2 },
+    { "id": "order", "layer": "aggregate", "label": "工单", "lines": 1088, "dependents": 5 },
+    { "id": "workflow", "layer": "aggregate", "label": "工作流", "lines": 680, "dependents": 9 },
+    { "id": "workspace", "layer": "aggregate", "label": "工作区", "lines": 519, "dependents": 15 },
+    { "id": "catalog", "layer": "aggregate", "label": "目录", "lines": 210, "dependents": 4 },
+    { "id": "artifact", "layer": "aggregate", "label": "资产表", "lines": 168, "dependents": 5 },
+    { "id": "material", "layer": "aggregate", "label": "材料", "lines": 240, "dependents": 1 },
+    { "id": "criterion", "layer": "infra", "label": "判据", "lines": 332, "dependents": 8 },
+    { "id": "outcome", "layer": "infra", "label": "结果", "lines": 66, "dependents": 12 },
+    { "id": "error", "layer": "infra", "label": "定义错误", "lines": 189, "dependents": 2 },
+    { "id": "executor", "layer": "infra", "label": "执行者", "lines": 20, "dependents": 7 },
+    { "id": "paths", "layer": "infra", "label": "占位", "lines": 54, "dependents": 5 },
+    { "id": "fields", "layer": "infra", "label": "字段表", "lines": 71, "dependents": 4 },
+    { "id": "ids", "layer": "infra", "label": "凭证", "lines": 53, "dependents": 6 },
+    { "id": "clock", "layer": "infra", "label": "时刻", "lines": 14, "dependents": 3 },
+    { "id": "sha1", "layer": "infra", "label": "摘要", "lines": 73, "dependents": 1 },
+    { "id": "events", "layer": "infra", "label": "领域事件", "lines": 157, "dependents": 3 }
+  ],
+  "edges": [
+    { "from": "cli", "to": "order", "kind": "trunk" },
+    { "from": "cli", "to": "workflow", "kind": "trunk" },
+    { "from": "cli", "to": "workspace", "kind": "trunk" },
+    { "from": "cli", "to": "catalog", "kind": "trunk" },
+    { "from": "cli", "to": "artifact", "kind": "trunk" },
+    { "from": "cli", "to": "material", "kind": "trunk" },
+    { "from": "cli", "to": "search", "kind": "depends" },
+    { "from": "cli", "to": "audit", "kind": "depends" },
+    { "from": "prompts", "to": "order", "kind": "depends" },
+    { "from": "search", "to": "catalog", "kind": "depends" },
+    { "from": "audit", "to": "workspace", "kind": "depends" },
+    { "from": "audit", "to": "catalog", "kind": "depends" },
+    { "from": "audit", "to": "artifact", "kind": "depends" },
+    { "from": "order", "to": "workflow", "kind": "depends" },
+    { "from": "order", "to": "workspace", "kind": "cycle" },
+    { "from": "workspace", "to": "order", "kind": "cycle" },
+    { "from": "workflow", "to": "workspace", "kind": "cycle" },
+    { "from": "workspace", "to": "workflow", "kind": "cycle" },
+    { "from": "catalog", "to": "artifact", "kind": "depends" },
+    {
+      "from": "order",
+      "to": "audit",
+      "kind": "violation",
+      "rule": "聚合不得依赖服务",
+      "evidence": [
+        "src/order/execute.rs:47",
+        "src/order/execute.rs:48",
+        "src/order/execute.rs:136",
+        "src/order/execute.rs:137"
+      ]
+    }
+  ],
+  "domain_to_infra": [
+    { "from": "order", "to": "criterion" },
+    { "from": "order", "to": "executor" },
+    { "from": "order", "to": "paths" },
+    { "from": "order", "to": "outcome" },
+    { "from": "order", "to": "ids" },
+    { "from": "order", "to": "clock" },
+    { "from": "order", "to": "events" },
+    { "from": "workflow", "to": "criterion" },
+    { "from": "workflow", "to": "error" },
+    { "from": "workflow", "to": "executor" },
+    { "from": "workflow", "to": "fields" },
+    { "from": "workflow", "to": "outcome" },
+    { "from": "workflow", "to": "ids" },
+    { "from": "workflow", "to": "events" },
+    { "from": "workspace", "to": "criterion" },
+    { "from": "workspace", "to": "paths" },
+    { "from": "workspace", "to": "fields" },
+    { "from": "workspace", "to": "ids" },
+    { "from": "workspace", "to": "clock" },
+    { "from": "workspace", "to": "sha1" },
+    { "from": "catalog", "to": "outcome" },
+    { "from": "artifact", "to": "criterion" },
+    { "from": "material", "to": "outcome" },
+    { "from": "search", "to": "outcome" },
+    { "from": "audit", "to": "criterion" },
+    { "from": "audit", "to": "outcome" }
+  ],
+  "infra_internal": [
+    { "from": "criterion", "to": "error" },
+    { "from": "criterion", "to": "executor" },
+    { "from": "criterion", "to": "paths" },
+    { "from": "criterion", "to": "fields" },
+    { "from": "error", "to": "executor" },
+    { "from": "error", "to": "paths" },
+    { "from": "error", "to": "fields" }
+  ],
+  "back_edges": [
+    { "from": "events", "to": "order", "kind": "loop", "evidence": ["src/events.rs:8"] },
+    { "from": "events", "to": "workflow", "kind": "loop", "evidence": ["src/events.rs:9"] }
+  ],
+  "findings": [
+    "order → audit 违反「聚合不得依赖服务」，且无测试钉住（tests/contract.rs 只钉入口层方向）",
+    "聚合间两个环都汇于 workspace：workspace ↔ order、workspace ↔ workflow",
+    "CONTRIBUTING 命名漂移：仍写 task/ 聚合与旧测试名（agent_step、task_start），实际为 order/ 与 order_start 等",
+    "单文件 250 行红线全部达标，最大 material/mod.rs 240 行；贴线四件中三件是 mod.rs"
+  ]
+}
